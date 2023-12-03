@@ -39,7 +39,7 @@
                 <div class="tile">
                     <h3 class="tile-title">Tạo mới sản phẩm</h3>
                     <div class="tile-body">
-                        <form class="row"  action="{{url("nhan-vien-edit-san-pham",['product'=>$product->id])}}" method="post" enctype="multipart/form-data">
+                        <form class="row"  action="{{url("employee/nhan-vien-edit-san-pham",['product'=>$product->id])}}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
 

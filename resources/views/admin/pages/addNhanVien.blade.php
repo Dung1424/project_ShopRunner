@@ -7,6 +7,7 @@
                 <li class="breadcrumb-item">List of employee</li>
                 <li class="breadcrumb-item"><a href="#">More staff</a></li>
             </ul>
+            <div id="clock"></div>
         </div>
         <div class="row">
             <div class="col-md-12">

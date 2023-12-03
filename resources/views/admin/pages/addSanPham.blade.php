@@ -7,6 +7,7 @@
                 <li class="breadcrumb-item">Danh sách nhân viên</li>
                 <li class="breadcrumb-item"><a href="#">Thêm nhân viên</a></li>
             </ul>
+            <div id="clock"></div>
         </div>
         <div class="row">
             <div class="col-md-12">

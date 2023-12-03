@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class ProductController extends Controller
+class ProductManagerController
 {
     public function qlSanPham(Request $request){
         $products = Product::onlyTrashed()->orderBy("id","desc")->paginate(20);
@@ -127,6 +126,4 @@ class ProductController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-
-
 }

@@ -77,7 +77,7 @@
                                     <td>{!! $item->getPaid() !!}</td>
                                     <td>{!! $item->getStatus() !!}</td>
                                     <td style="display:flex;">
-                                        <form action="{{url("nhan-vien-delete-đon-hang",['orders'=>$item->id])}}" method="POST">
+                                        <form action="{{url("employee/nhan-vien-delete-đon-hang",['orders'=>$item->id])}}" method="POST">
                                             @csrf
                                             @method("DELETE")
                                             <button onclick="return confirm('Chắc chắn muốn xoá sản phẩm: {{$item->name}}')" class="btn btn-primary btn-sm trash" type="submit"

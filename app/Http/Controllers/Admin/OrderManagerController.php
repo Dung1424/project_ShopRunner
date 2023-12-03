@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
-
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
-
 use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
-class OrderController extends Controller
+class OrderManagerController
 {
     public function qlDonHang(Request $request){
         $grand_total = $request->get("grand_total");
@@ -97,5 +90,4 @@ class OrderController extends Controller
 
         return redirect()->to("admin/admin-quan-ly-đon-hang");
     }
-
 }

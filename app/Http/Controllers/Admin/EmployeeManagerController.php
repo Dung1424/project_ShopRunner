@@ -1,70 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
-use App\Models\favoriteOrder;
-use App\Models\Order;
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class adminController extends Controller
+class EmployeeManagerController
 {
-
-    public function adminDashboard(){
-        // ô số liệu tổng hợp
-        $totalUser = User::whereNull('role')->count();
-        $totalProducts = Product::count();
-        $totalOrders = Order::count();
-        $totalRevenue = Order::where('status', '4')->sum('grand_total');
-        $totalCancelledOrders = Order::getTotalCancelledOrders();
-        $outOfStockProductCount = Product::outOfStock()->count();
-
-        // đơn hàng chờ xác nhận
-
-        $pendingOrders = Order::where('status', Order::PENDING)->paginate(5);
-
-
-        // bảng sản phẩm bán chạy
-        $bestSellingProducts = DB::table('order_products')
-            ->join('orders', 'order_products.order_id', '=', 'orders.id')
-            ->where('orders.status', 4) // Chỉ lấy đơn hàng có trạng thái đã hoàn thành
-            ->select('order_products.product_id', DB::raw('SUM(order_products.qty) as total_qty_sold'))
-            ->groupBy('order_products.product_id')
-            ->orderBy('total_qty_sold', 'desc')
-            ->paginate(5);
-
-        $bestSellingProductDetails = [];
-
-        foreach ($bestSellingProducts as $product) {
-            $productDetail = Product::find($product->product_id);
-            if ($productDetail) {
-                $productDetail->total_qty_sold = $product->total_qty_sold;
-                $bestSellingProductDetails[] = $productDetail;
-            }
-        }
-
-
-        // Truyền số liệu vào view và trả về view
-        return view("admin.pages.adminDashboard", [
-            'totalUser' =>  $totalUser,
-
-            'totalProducts' => $totalProducts,
-            'totalOrders' => $totalOrders,
-            'totalRevenue' => $totalRevenue,
-            'totalCancelledOrders' => $totalCancelledOrders,
-
-            'outOfStockProductCount' => $outOfStockProductCount,
-
-            'bestSellingProductDetails' => $bestSellingProductDetails,
-            'bestSellingProducts' => $bestSellingProducts,
-            'pendingOrders' => $pendingOrders,
-        ]);
-    }
     public function qlNhanVien(){
         $user =User::where('role', 'EMPLOYEE')->get();
         return view("admin.pages.qlNhanVien",compact("user"));
@@ -161,41 +105,4 @@ class adminController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-
-
-    public function qlKhachHang(){
-        $user = User::whereNull('role')->get();
-        return view("admin.pages.User.qlKhachHang", compact("user"));
-    }
-    public function orderUser(Request $request, User $user){
-        $grand_total = $request->get("grand_total");
-        $shipping_method = $request->get("shipping_method");
-        $payment_method = $request->get("payment_method");
-        $paid = $request->get("paid");
-        $status = $request->get("rate");
-
-        $orders = $user->orders()
-            ->Search($request)
-            ->FilterByGrandTotal($request)
-            ->FilterByShippingMethod($request)
-            ->FilterByStatus($request)
-            ->FilterByPaymentMethod($request)
-            ->FilterByPaid($request)
-            ->orderBy("id","desc")
-            ->paginate(20);
-
-        $categories = Category::all();
-
-        return view("admin.pages.User.orderUser", [
-            "user" => $user,
-            "orders" => $orders,
-            "categories" => $categories
-        ]);
-    }
-
-    public function orderDetailUser(Order $order){
-        return view("admin.pages.User.orderDetailUser", compact('order'));
-    }
-
-
 }

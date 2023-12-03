@@ -40,7 +40,7 @@
                         <div class="row element-button">
                             <div class="col-sm-2">
 
-                                <a class="btn btn-add btn-sm" href="{{url("nhan-vien-add-san-pham")}}" title="Thêm"><i class="fas fa-plus"></i>
+                                <a class="btn btn-add btn-sm" href="{{url("employee/nhan-vien-add-san-pham")}}" title="Thêm"><i class="fas fa-plus"></i>
                                     Tạo mới sản phẩm</a>
                             </div>
 

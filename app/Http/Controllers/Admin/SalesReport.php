@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\favoriteOrder;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class baoCaoDoanhThuController
+class SalesReport
 {
     function revenueChart(Request $request)
     {
@@ -248,5 +247,3 @@ class baoCaoDoanhThuController
         ]);
     }
 }
-
-
