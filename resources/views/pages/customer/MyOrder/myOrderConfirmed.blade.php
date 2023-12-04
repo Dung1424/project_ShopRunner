@@ -41,19 +41,13 @@
                 <div class="menu">
                     <i class="fa-solid fa-heart"></i>
                     <a href="{{url("favorite-order")}}">
-                        <li >Favorite product</li>
+                        <li >favorite product</li>
                     </a>
                 </div>
                 <div class="menu">
                     <i class="fa-solid fa-user"></i>
                     <a href="{{ url("profile") }}">
                         <li >Profile</li>
-                    </a>
-                </div>
-                <div class="menu">
-                    <i class="fa-solid fa-user"></i>
-                    <a href="{{ url("purchase") }}">
-                        <li >Purchase Order</li>
                     </a>
                 </div>
             </ul>
@@ -65,37 +59,84 @@
                     <p style="color: black">My order </p>
                 </div>
                 <div class="content-top-title">
-                    <p style="color: black">0 order </p>
+                    <p style="color: black">{{ $orders->count() }} order </p>
                 </div>
             </div>
+            <style>
+                .content-top1 {
+                    border-top: 1px solid #DDE1EF;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    padding: 3px; /* Điều chỉnh khoảng cách nếu cần thiết */
+                }
+
+                .btn {
+                    font-weight: bold;
+                    text-align: center;
+                    margin: 5px; /* Điều chỉnh khoảng cách giữa các nút */
+                    padding: 10px; /* Điều chỉnh padding của nút */
+                    border: 1px solid transparent;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                }
+
+
+            </style>
+            <div class="content-top1 d-flex">
+                <a href="{{url("/my-order")}}" class="btn">All</a>
+                <a href="{{url("/my-order-pending")}}" class="btn">Pending</a>
+                <a style="color: #ff5722;font-weight: bold" href="{{url("/my-order-confirmed")}}" class="btn">Confirmed</a>
+                <a href="{{url("/my-order-shipping")}}" class="btn">Shipping</a>
+                <a href="{{url("/my-order-shipped")}}" class="btn">Shipped</a>
+                <a href="{{url("/my-order-complete")}}" class="btn">Complete</a>
+                <a type="button" href="{{url("/my-order-cancel")}}" class="btn cancel-btn">Cancel</a>
+            </div>
+
+
             <table class="order-table">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Full Name </th>
-                    <th>Email</th>
-                    {{--                    <th>Address</th>--}}
-                    {{--                    <th>Payment</th>--}}
-                    {{--                    <th>Transport</th>--}}
-                    {{--                    <th>Grand Total</th>--}}
-                    <th>Order Details</th>
+                    <th>ID đơn hàng</th>
+                    <th>Created At</th>
+                    <th>Grand Total</th>
+                    <th>Full Name</th>
+                    <th>Shipping Method</th>
+                    <th>Payment Method</th>
+                    <th>Paid</th>
+                    <th>Status</th>
+                    <th >Action</th>
                 </tr>
                 </thead>
-                @foreach($orders as $order)
-                    <tbody>
+                <tbody>
+                @foreach ($orders as $item)
                     <tr>
-                        <td>{{$order->id}} </td>
-                        <td>{{$order->full_name}} </td>
-                        <td>{{$order->email}} </td>
+
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->created_at}}</td>
+                        <td>{{$item->getGrandTotal()}}</td>
+                        <td>{{$item->full_name}}</td>
+                        <td>{{$item->shipping_method}}</td>
+                        <td>{{$item->payment_method}}</td>
+                        <td>{!! $item->getPaid() !!}</td>
+                        <td>{!! $item->getStatus() !!}</td>
                         <td >
-                            <button style="border: 1px solid black" type="submit">    <a href="{{ url("purchase", ['order' => $order->id]) }}">Purchase Order</a>
+                            <button style="padding: 7px 7px; border-radius: 5px" class="site-btn"  type="submit">
+                                <a style="color: white" href="{{ url("order-detail", ['orders' => $item->id]) }}">Detail</a>
                             </button>
                         </td>
+
                     </tr>
-                    <!-- Thêm các hàng khác tương tự cho các đơn hàng khác -->
-                    </tbody>
                 @endforeach
+                <!-- Thêm các hàng khác tương tự cho các đơn hàng khác -->
+                </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                <div class="mt-3 ">
+                    {!! $orders->links("pagination::bootstrap-4") !!}
+                </div>
+            </div>
         </div>
     </div>
 @endsection
