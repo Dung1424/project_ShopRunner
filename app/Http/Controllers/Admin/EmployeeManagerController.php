@@ -11,17 +11,17 @@ class EmployeeManagerController
 {
     public function qlNhanVien(){
         $user =User::where('role', 'EMPLOYEE')->get();
-        return view("admin.pages.qlNhanVien",compact("user"));
+        return view("admin.pages.Employee.qlNhanVien",compact("user"));
     }
 
     public function addNhanVien(){
 
-        return view("admin.pages.addNhanVien");
+        return view("admin.Employee.pages.addNhanVien");
     }
 
     public function editNhanVien(User $user){
 
-        return view("admin.pages.editNhanVien", compact("user"));
+        return view("admin.pages.Employee.editNhanVien", compact("user"));
     }
 
     public function store(Request $request){

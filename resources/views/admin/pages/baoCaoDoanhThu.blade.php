@@ -35,7 +35,7 @@
                     <div class="info">
                         <h4>
                             Total order</h4>
-                        <p><b>{{ $totalOrders }}Order</b></p>
+                        <p><b>{{ $totalOrders }} Order</b></p>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="widget-small warning coloured-icon"><i class='icon fa-3x bx bxs-tag-x'></i>
                     <div class="info">
                         <h4>Out of stock</h4>
-                        <p><b>{{ $outOfStockProductCount }}Product</b></p>
+                        <p><b>{{ $outOfStockProductCount }} Product</b></p>
                     </div>
                 </div>
             </div>
